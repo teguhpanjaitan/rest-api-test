@@ -2,7 +2,7 @@
 
 namespace Api;
 
-use Zend\Router\Http\Literal;
+use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 
@@ -10,12 +10,14 @@ return [
     'router' => [
         'routes' => [
             'api_list' => [
-                'type' => Literal::class,
+                'type' => Segment::class,
                 'options' => [
-                    'route'    => '/api/list',
+                    'route'    => '/api/list[/:id]',
+                    'constraints' => [
+                        'id' => '[0-9]+',
+                    ],
                     'defaults' => [
-                        'controller' => Controller\IndexController::class,
-                        'action'     => 'index',
+                        'controller' => Controller\IndexController::class
                     ],
                 ],
             ],
